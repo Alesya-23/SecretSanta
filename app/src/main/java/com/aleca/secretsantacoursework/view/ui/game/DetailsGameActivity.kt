@@ -1,16 +1,26 @@
 package com.aleca.secretsantacoursework.view.ui.game
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
+import android.os.Build
 import android.os.Bundle
 import android.util.SparseBooleanArray
 import android.widget.*
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.aleca.secretsantacoursework.R
 import com.aleca.secretsantacoursework.model.Game
 import com.aleca.secretsantacoursework.model.User
 import com.aleca.secretsantacoursework.viewmodel.AddNewGameViewModel
 import com.aleca.secretsantacoursework.viewmodel.DetailsGameViewModel
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DetailsGameActivity : AppCompatActivity() {
     private lateinit var nameGame: TextView
@@ -30,10 +40,10 @@ class DetailsGameActivity : AppCompatActivity() {
         setContentView(R.layout.details_game_activity)
         gameId = intent.getIntExtra(GAME_ID, -1)
         userId = intent.getIntExtra(USER_ID_FOR_PAIR, -1)
-        nameGame = findViewById(R.id.name_game)
-        dateStart = findViewById(R.id.datePickerStart)
-        dateEnd = findViewById(R.id.datePickerEnd)
-        countGamers = findViewById(R.id.count_people)
+        nameGame = findViewById(R.id.name_game_edit)
+        dateStart = findViewById(R.id.datePickerStartTextView)
+        dateEnd = findViewById(R.id.datePickerEndTextView)
+        countGamers = findViewById(R.id.count_people_edit)
         listViewGamers = findViewById(R.id.game_list_detail)
         buttonSave = findViewById(R.id.add_game_button)
         buttonSeePair = findViewById(R.id.saw_pair)
@@ -80,6 +90,13 @@ class DetailsGameActivity : AppCompatActivity() {
     }
 
     private fun initList() {
+        val selectTypeList = game?.let { checkGameIsActive(it.dateEnd) }
+        if (selectTypeList == 1) {
+            initListForEdit()
+        } else initListWithoutEdit()
+    }
+
+    private fun initListForEdit() {
         listViewGamers.choiceMode = ListView.CHOICE_MODE_MULTIPLE
         listGamers = getPeoples()
         val arrayAdapter = ArrayAdapter(
@@ -96,6 +113,17 @@ class DetailsGameActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun initListWithoutEdit() {
+        listGamers = getGamers()
+        val arrayAdapter = ArrayAdapter(
+            this.applicationContext,
+            R.layout.item_people_in_game_small, listGamers
+        )
+        listViewGamers.adapter = arrayAdapter
+        nameGame.isEnabled = false
+    }
+
 
     private fun getListGamers() {
         listPeopleGame.clear()
@@ -142,21 +170,32 @@ class DetailsGameActivity : AppCompatActivity() {
     }
 
     private fun updateUserData() {
-        getListGamers()
         val nameGame = nameGame.text.toString()
         val dateStart = dateStart.text.toString()
         val dateEnd = dateEnd.text.toString()
-        if (checkFieldsNewGame()) {
-            addGameViewModel.setIdGame(gameId)
-            viewModel.changeGame(
-                Game(gameId, nameGame, dateStart, dateEnd, listPeopleGame.size),
-                this
-            )
-            viewModel.clearPairs(gameId, this)
-            addGameViewModel.generatePairs(listPeopleGame, this)
-            addGameViewModel.bindGameToUsers(listPeopleGame, this)
-        } else {
-            Toast.makeText(this, R.string.toast_dont_fill_field, Toast.LENGTH_SHORT).show()
+        val statusGameIsActive = checkGameIsActive(dateEnd)
+        if (statusGameIsActive == 1) {
+            getListGamers()
+            if (checkFieldsNewGame()) {
+                addGameViewModel.setIdGame(gameId)
+                viewModel.changeGame(
+                    Game(
+                        gameId,
+                        nameGame,
+                        dateStart,
+                        dateEnd,
+                        listPeopleGame.size,
+                        statusGameIsActive
+                    ),
+                    this
+                )
+                viewModel.clearPairs(gameId, this)
+                addGameViewModel.generatePairs(listPeopleGame, this)
+                addGameViewModel.bindGameToUsers(listPeopleGame, this)
+                getGame()
+            } else {
+                Toast.makeText(this, R.string.toast_dont_fill_field, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -165,9 +204,19 @@ class DetailsGameActivity : AppCompatActivity() {
             dateStart.text.isNotEmpty() &&
             dateEnd.text.isNotEmpty() &&
             dateEnd.text != dateStart.text
-            && listPeopleGame.isNotEmpty()
+            && listGamers.isNotEmpty()
         )
             return true
         return false
+    }
+
+    @SuppressLint("NewApi")
+    private fun checkGameIsActive(dateEndGame: String): Int {
+        val dateNow = LocalDate.now()
+        val dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val dateEndInDate = LocalDate.parse(dateEndGame, dateFormatter)
+        return if (dateEndInDate.isBefore(dateNow) || dateEndInDate.isEqual(dateNow)) {
+            0
+        } else 1
     }
 }

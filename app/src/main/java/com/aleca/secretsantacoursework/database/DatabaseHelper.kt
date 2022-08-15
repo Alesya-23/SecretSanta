@@ -21,7 +21,8 @@ class DatabaseHelper(context: Context) :
                     "    name character(100) NOT NULL,\n" +
                     "    dateStart  character(100) NOT NULL,\n" +
                     "    dateEnd  character(100) NOT NULL,\n" +
-                    "    countGamers character(250) NOT NULL);\n"
+                    "    countGamers character(250) NOT NULL, \n" +
+                    "    statusGameIsActive integer NOT Null);\n"
         )
         db.execSQL(
             "CREATE TABLE userGame (\n" +

@@ -21,14 +21,6 @@ class DetailsGameViewModel : ViewModel() {
         return game
     }
 
-    fun getPairs(id: Int, context: Context): List<Pair?> {
-        val pair = PairStorage(context)
-        pair.open()
-        val pairs = pair.getFilterList(id)
-        pair.close()
-        return pairs
-    }
-
     fun getPecipientId(idUser: Int, idGame: Int, context: Context): Int {
         val gameUser = PairStorage(context)
         gameUser.open()
@@ -83,6 +75,8 @@ class DetailsGameViewModel : ViewModel() {
 
     fun clearPairs(id: Int, context: Context) {
         val gameUser = UserGameStorage(context)
+        val pairStorage = PairStorage(context)
+        pairStorage.open()
         gameUser.open()
         val listUsers = gameUser.getFilterList(id)
         for (i in listUsers.indices) {
@@ -94,7 +88,9 @@ class DetailsGameViewModel : ViewModel() {
                     )
                 }
             }
+            pairStorage.delete(id)
         }
         gameUser.close()
+        pairStorage.close()
     }
 }

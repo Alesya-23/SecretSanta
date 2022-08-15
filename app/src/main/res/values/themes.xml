@@ -2,13 +2,13 @@
     <!-- Base application theme. -->
     <style name="Theme.SecretSantaCourseWork" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#b71c1c</item>
-        <item name="colorPrimaryVariant">#f05545</item>
-        <item name="colorOnPrimary">#7f0000</item>
+        <item name="colorPrimary">#00695c</item>
+        <item name="colorPrimaryVariant">#439889</item>
+        <item name="colorOnPrimary">#003d33</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#00695c</item>
-        <item name="colorSecondaryVariant">#439889</item>
-        <item name="colorOnSecondary">#003d33</item>
+        <item name="colorSecondary">#b71c1c</item>
+        <item name="colorSecondaryVariant">#f05545</item>
+        <item name="colorOnSecondary">#7f0000</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->

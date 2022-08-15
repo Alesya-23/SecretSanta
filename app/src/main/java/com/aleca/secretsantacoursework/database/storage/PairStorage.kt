@@ -6,6 +6,7 @@ import android.content.Context
 import android.database.Cursor
 import com.aleca.secretsantacoursework.database.DatabaseHelper
 import com.aleca.secretsantacoursework.model.Pair
+import com.aleca.secretsantacoursework.view.ui.game.GAME_ID
 
 private const val TABLE = "pair"
 private const val COLUMN_ID = "id"
@@ -114,7 +115,7 @@ class PairStorage(context: Context) {
 
     fun delete(id: Int) {
         val database = this.sqlHelper.writableDatabase
-        val where = "$COLUMN_ID = $id"
+        val where = "$COLUMN_GAME_ID = $id"
         database.delete(TABLE, where, null)
     }
 }

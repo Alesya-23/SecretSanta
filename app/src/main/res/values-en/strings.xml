@@ -58,4 +58,6 @@
     <string name="toast_dont_fill_field">you have not filled in all the fields</string>
     <string name="title_pair">Пара</string>
     <string name="title_game_pair">Игровая пара</string>
+    <string name="see_my_pair_button">Посмотреть мою пару</string>
+    <string name="name_gamer_text_view">Имя игрока</string>
 </resources>

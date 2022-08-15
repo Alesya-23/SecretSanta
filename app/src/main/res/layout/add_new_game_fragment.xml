@@ -23,7 +23,6 @@
             android:layout_margin="15dp"
             android:hint="@string/name_game"
             android:padding="15dp"
-            android:textColor="@color/secondaryTextColor"
             android:textSize="22sp" />
 
     </com.google.android.material.textfield.TextInputLayout>

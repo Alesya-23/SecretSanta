@@ -8,8 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@drawable/layout_bg_rounded"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/layout_bg_rounded">
 
         <ImageView
             android:id="@+id/photo_mark"
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:hint="Имя игрока"
+            android:hint="@string/name_gamer_text_view"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/secondaryTextColor"
             android:textSize="14sp"
