@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "289202252822",
+    "firebase_url": "https://secretsanta-2222a-default-rtdb.firebaseio.com",
+    "project_id": "secretsanta-2222a",
+    "storage_bucket": "secretsanta-2222a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289202252822:android:16e667fcc195bd6c565937",
+        "android_client_info": {
+          "package_name": "com.aleca.secretsantacoursework"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289202252822-7bcnmpnoess31pii2c6r9f2da1b8fcm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIOwpCptogo_GMSqNuu5RlDzu7qqd7Hck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289202252822-7bcnmpnoess31pii2c6r9f2da1b8fcm5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

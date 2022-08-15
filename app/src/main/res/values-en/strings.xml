@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">SecretSantaCourseWork</string>
+    <string name="title_activity_main_menu">MainActivity</string>
+    <string name="title_home">Profile</string>
+    <string name="title_list_game">Games</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="login">Login (email):</string>
+    <string name="password">Password:</string>
+    <string name="sign_in">log in</string>
+    <string name="sign_up">log out</string>
+    <string name="forgot_password">forgot_password</string>
+    <string name="registration">registration</string>
+    <string name="registration_name">Your name or nickname</string>
+    <string name="e_mail_sign_up">E-mail</string>
+    <string name="come_up_sign_up_password">come up with a password</string>
+    <string name="repeat_sign_up_password">Repeat password</string>
+    <string name="agree_with_project_rules">I agree with the <u>project rules </u></string>
+    <string name="get_news_e_mail">I want to receive a newsletter about the project news by e-mail</string>
+    <string name="our_data_label">YurData</string>
+    <string name="surname_edit">Last name</string>
+    <string name="name_edit">Name:</string>
+    <string name="middle_name_edit">Patronymic</string>
+    <string name="telephone_edit">Phone</string>
+    <string name="city_edit">City</string>
+    <string name="save_edit">Save</string>
+    <string name="dont_fill_field_name_hint">The Name field</string>
+    is not filled in
+    <string name="dont_fill_field_email_hint">Login field is not filled in</string>
+    <string name="dont_fill_correct_field_email_hint">Incorrect e-mail</string>
+    entered
+    <string name="dont_fill_field_password_hint">The Password field</string>
+    is not filled in
+    <string name="dont_equals_repeat_password_hint">The entered passwords do not match</string>
+    <string name="sign_in_toast">Input</string>
+    <string name="sign_in_error_toast">Data loading is not completed. Log in again.</string>
+    <string name="sign_in_error_fields_empty_toast">Enter your password and login</string>
+    <string name="sign_in_error_field_login_empty_toast">Enter your username</string>
+    <string name="sign_in_errror_field_password_empty_toast">Enter the password</string>
+    <string name="sign_in_errror_incorrect_data_toast">Check the correctness of the data</string>
+    <string name="sign_up_error_user_exsist_toast">The user is already in the system</string>
+    <string name="sign_up_registration_sucsess_toast">Registration was successful</string>
+    <string name="hobby">Hobby</string>
+    <string name="button_change">change</string>
+    <string name="name_game">Game name</string>
+    <string name="count_peoples">number of players</string>
+    <string name="add_people_in_game">Add players</string>
+    <string name="add_game">Add a game</string>
+    <string name="add_change_game">Save the modified game</string>
+    <string name="date_start_game">Game start date</string>
+    <string name="date_end_game">End date of the game</string>
+    <string name="generate_again_button">Re-generation</string>
+    <string name="description_game">To create a game, click on the red button! Fill in all the fields, add players and launch a Secret Santa!</string>
+    <string name="write_your_hobbies">write your hobbies</string>
+    <string name="data_is_selected">selected</string>
+    <string name="datapicker_is_closed">\"closed\"</string>
+    <string name="data_picker_is_closed">Date Picker closed</string>
+    <string name="attantion_toast_count_gamers">There must be at least 2 players</string>
+    <string name="toast_dont_fill_field">you have not filled in all the fields</string>
+    <string name="title_pair">Пара</string>
+    <string name="title_game_pair">Игровая пара</string>
+</resources>
