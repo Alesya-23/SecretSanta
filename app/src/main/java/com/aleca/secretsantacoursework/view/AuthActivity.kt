@@ -32,10 +32,6 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    fun getListUser(): ArrayList<User> {
-        return listUsers
-    }
-
     override fun onStart() {
         super.onStart()
         mService = mService.getBinder().getService()

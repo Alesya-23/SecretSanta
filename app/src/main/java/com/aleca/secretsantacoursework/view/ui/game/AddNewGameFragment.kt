@@ -34,6 +34,7 @@ class AddNewGameFragment : Fragment() {
     private lateinit var listPeoplesAll: ArrayList<User>
     private lateinit var listPair: ArrayList<Pair>
     private lateinit var listView: ListView
+    private var positionUser = 0
     var userId = 0
 
     private val userDetailIdArgument by lazy {
@@ -57,7 +58,6 @@ class AddNewGameFragment : Fragment() {
         listPeoplesAll = ArrayList()
         actionTextViewDataEnd()
         actionTextViewDataStart()
-        actionAddPeopleButton()
         actionAddGameButton()
         initList()
     }
@@ -74,10 +74,8 @@ class AddNewGameFragment : Fragment() {
                     "$dateStart" + getString(R.string.data_is_selected),
                     Toast.LENGTH_LONG
                 ).show()
-                addNewGameFragmentBinding.datePickerStart.text = dateStart
+                addNewGameFragmentBinding.datePickerStartTextView.text = dateStart
             }
-
-            // Setting up the event for when cancelled is clicked
             datePicker.addOnNegativeButtonClickListener {
                 Toast.makeText(
                     activity?.applicationContext,
@@ -85,8 +83,6 @@ class AddNewGameFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-
-            // Setting up the event for when back button is pressed
             datePicker.addOnCancelListener {
                 Toast.makeText(
                     activity?.applicationContext,
@@ -102,10 +98,7 @@ class AddNewGameFragment : Fragment() {
         addNewGameFragmentBinding.datePickerEnd.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.datePicker().build()
             datePicker.show(childFragmentManager, "DatePicker")
-
-            // Setting up the event for when ok is clicked
             datePicker.addOnPositiveButtonClickListener {
-                // formatting date in dd-mm-yyyy format.
                 val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
                 dateEnd = dateFormatter.format(Date(it))
                 Toast.makeText(
@@ -113,10 +106,8 @@ class AddNewGameFragment : Fragment() {
                     "$dateEnd" + getString(R.string.data_is_selected),
                     Toast.LENGTH_LONG
                 ).show()
-                addNewGameFragmentBinding.datePickerEnd.text = dateEnd
+                addNewGameFragmentBinding.datePickerEndTextView.text = dateEnd
             }
-
-            // Setting up the event for when cancelled is clicked
             datePicker.addOnNegativeButtonClickListener {
                 Toast.makeText(
                     activity?.applicationContext,
@@ -124,8 +115,6 @@ class AddNewGameFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-
-            // Setting up the event for when back button is pressed
             datePicker.addOnCancelListener {
                 Toast.makeText(
                     activity?.applicationContext,
@@ -141,6 +130,9 @@ class AddNewGameFragment : Fragment() {
             activity?.applicationContext?.let { viewModel.getPeoples(it) } as ArrayList<User>
         for (i in 0 until listPeoplesAll.size) {
             listGamers.add(listPeoplesAll[i].name + " " + listPeoplesAll[i].email)
+            if (listPeoplesAll[i].id == userId) {
+                positionUser = i
+            }
         }
         return listGamers
     }
@@ -156,6 +148,7 @@ class AddNewGameFragment : Fragment() {
             )
         }
         listView.adapter = arrayAdapter
+        listView.setItemChecked(positionUser, true)
     }
 
     private fun getListGamers() {
@@ -176,22 +169,12 @@ class AddNewGameFragment : Fragment() {
         }
     }
 
-    private fun actionAddPeopleButton() {
-//        addNewGameFragmentBinding.addPeopleButton.setOnClickListener {
-//            //дочерний фрагмент с людьми
-////            val fragmentAddPeopleListFragment = newInstance()
-////            childFragmentManager.beginTransaction()
-////                    .addToBackStack(AddNewGameFragment.javaClass.simpleName)
-////                    .replace(R.id.add_new_game, fragmentAddPeopleListFragment)
-//        }
-    }
-
     private fun actionAddGameButton() {
         addNewGameFragmentBinding.addGameButton.setOnClickListener {
             getListGamers()
             if (checkFieldsNewGame()) {
                 listPair = ArrayList()
-                val name = addNewGameFragmentBinding.nameGame.text.toString()
+                val name = addNewGameFragmentBinding.nameGameEdit.text.toString()
                 val game = Game(
                     0,
                     name = name,
@@ -227,10 +210,10 @@ class AddNewGameFragment : Fragment() {
 
     private fun checkFieldsNewGame(): Boolean {
         with(addNewGameFragmentBinding) {
-            if (nameGame.text?.isNotEmpty() == true &&
-                datePickerStart.text.isNotEmpty() &&
-                datePickerEnd.text.isNotEmpty() &&
-                datePickerEnd.text != datePickerStart.text
+            if (nameGameEdit.text?.isNotEmpty() == true &&
+                datePickerStartTextView.text.isNotEmpty() &&
+                datePickerEndTextView.text.isNotEmpty() &&
+                datePickerEndTextView.text != datePickerStartTextView.text
                 && listPeopleGame.isNotEmpty()
             )
                 return true

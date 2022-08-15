@@ -83,6 +83,8 @@ class DetailsGameViewModel : ViewModel() {
 
     fun clearPairs(id: Int, context: Context) {
         val gameUser = UserGameStorage(context)
+        val pairStorage = PairStorage(context)
+        pairStorage.open()
         gameUser.open()
         val listUsers = gameUser.getFilterList(id)
         for (i in listUsers.indices) {
@@ -94,7 +96,9 @@ class DetailsGameViewModel : ViewModel() {
                     )
                 }
             }
+            pairStorage.delete(id)
         }
         gameUser.close()
+        pairStorage.close()
     }
 }

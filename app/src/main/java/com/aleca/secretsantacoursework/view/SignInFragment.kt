@@ -88,9 +88,9 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
     }
 
     private fun checkUser(): Boolean {
-        val listUser = (activity as AuthActivity).getListUser()
+        val listUser = userViewModel.getListUser((activity as AuthActivity).applicationContext)
         val check = (activity as AuthActivity).getFirebasePostService().checkUser(login, password)
-        val userOur = listUser.find { it.email == login && it.password == password }
+        val userOur = listUser.find { it?.email == login && it.password == password }
         if (userOur != null) {
             user = User(userOur.id, userOur.email, userOur.password, userOur.name, "")
             isDataInCorrect = checkDataSignIn(user.email, user.password)

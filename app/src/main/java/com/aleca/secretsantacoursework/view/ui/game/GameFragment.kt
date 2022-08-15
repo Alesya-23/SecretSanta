@@ -47,10 +47,16 @@ class GameFragment : Fragment() {
         return root
     }
 
+    override fun onResume() {
+        super.onResume()
+        downloadList()
+        bindRecyclerList()
+    }
+
     private fun actionAddNewGameButton() {
         button.setOnClickListener {
             val intent = Intent(activity?.baseContext, GameActivity::class.java)
-            intent.putExtra(USER_ID, (activity as MainMenuActivity).homeViewModel.getIdUser())
+            intent.putExtra(USER_ID, (activity as MainMenuActivity).getUser())
             startActivity(intent)
         }
     }

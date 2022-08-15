@@ -83,16 +83,6 @@ class AddNewGameViewModel : ViewModel() {
         userGameStorage.close()
     }
 
-    fun getList() {
-        val gameStorage = GameStorage(contextViewModel)
-        gameStorage.open()
-    }
-
-    fun getPeople() {
-        val list = ArrayList<String>()
-        val pairs = ArrayList<Pair>()
-    }
-
     fun getPeoples(context: Context): List<User?> {
         val storageUser = UserStorage(context)
         return storageUser.getFullList()

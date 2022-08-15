@@ -21,7 +21,7 @@ class PairDetailActivity : AppCompatActivity() {
         nameUser = findViewById(R.id.name_user)
         descriptionHobbyUser = findViewById(R.id.description_hobby_user)
         getUser()
-        this.title = getString(R.string.title_pair)
+        this.title = getString(R.string.title_game_pair)
     }
 
     private fun getUser() {

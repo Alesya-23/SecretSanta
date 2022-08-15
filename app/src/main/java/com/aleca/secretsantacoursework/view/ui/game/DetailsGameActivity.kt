@@ -30,10 +30,10 @@ class DetailsGameActivity : AppCompatActivity() {
         setContentView(R.layout.details_game_activity)
         gameId = intent.getIntExtra(GAME_ID, -1)
         userId = intent.getIntExtra(USER_ID_FOR_PAIR, -1)
-        nameGame = findViewById(R.id.name_game)
-        dateStart = findViewById(R.id.datePickerStart)
-        dateEnd = findViewById(R.id.datePickerEnd)
-        countGamers = findViewById(R.id.count_people)
+        nameGame = findViewById(R.id.name_game_edit)
+        dateStart = findViewById(R.id.datePickerStartTextView)
+        dateEnd = findViewById(R.id.datePickerEndTextView)
+        countGamers = findViewById(R.id.count_people_edit)
         listViewGamers = findViewById(R.id.game_list_detail)
         buttonSave = findViewById(R.id.add_game_button)
         buttonSeePair = findViewById(R.id.saw_pair)
@@ -135,7 +135,7 @@ class DetailsGameActivity : AppCompatActivity() {
 //                    .addToBackStack(fragment.tag)
 //                    .replace(R.id.detail_activity_container, fragment)
 //                    .commit()
-            val intent = Intent(this, PairDetailActivity::class.java)
+              val intent = Intent(this, PairDetailActivity::class.java)
             intent.putExtra(USER_ID_FOR_PAIR, userNowRecipientId)
             startActivity(intent)
         }
@@ -155,6 +155,7 @@ class DetailsGameActivity : AppCompatActivity() {
             viewModel.clearPairs(gameId, this)
             addGameViewModel.generatePairs(listPeopleGame, this)
             addGameViewModel.bindGameToUsers(listPeopleGame, this)
+            getGame()
         } else {
             Toast.makeText(this, R.string.toast_dont_fill_field, Toast.LENGTH_SHORT).show()
         }

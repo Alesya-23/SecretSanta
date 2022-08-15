@@ -4,14 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight"
-    android:foregroundTint="@color/colorPrimaryLight"
     tools:context=".view.ui.game.PairDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryLight"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,6 +25,7 @@
             android:id="@+id/name_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
             android:layout_margin="@dimen/margin_20"
             android:hint="@string/name_edit" />
 
@@ -35,6 +33,7 @@
             android:id="@+id/description_hobby_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
             android:layout_margin="@dimen/margin_30"
             android:inputType="textMultiLine" />
 
