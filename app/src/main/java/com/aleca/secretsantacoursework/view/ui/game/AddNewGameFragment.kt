@@ -1,5 +1,6 @@
 package com.aleca.secretsantacoursework.view.ui.game
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
@@ -21,6 +22,8 @@ import com.aleca.secretsantacoursework.model.User
 import com.aleca.secretsantacoursework.view.MainMenuActivity
 import com.aleca.secretsantacoursework.viewmodel.AddNewGameViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 private const val ID_ARGUMENT = "ID_ARGUMENT"
@@ -57,41 +60,17 @@ class AddNewGameFragment : Fragment() {
         listPeopleGame = ArrayList()
         listPeoplesAll = ArrayList()
         actionTextViewDataEnd()
-        actionTextViewDataStart()
+        initTextViewDataStart()
         actionAddGameButton()
         initList()
     }
 
-    private fun actionTextViewDataStart() {
-        addNewGameFragmentBinding.datePickerStart.setOnClickListener {
-            val datePicker = MaterialDatePicker.Builder.datePicker().build()
-            datePicker.show(childFragmentManager, "DatePicker")
-            datePicker.addOnPositiveButtonClickListener {
-                val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
-                dateStart = dateFormatter.format(Date(it))
-                Toast.makeText(
-                    activity?.applicationContext,
-                    "$dateStart" + getString(R.string.data_is_selected),
-                    Toast.LENGTH_LONG
-                ).show()
-                addNewGameFragmentBinding.datePickerStartTextView.text = dateStart
-            }
-            datePicker.addOnNegativeButtonClickListener {
-                Toast.makeText(
-                    activity?.applicationContext,
-                    "${datePicker.headerText}" + getString(R.string.datapicker_is_closed),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            datePicker.addOnCancelListener {
-                Toast.makeText(
-                    activity?.applicationContext,
-                    getString(R.string.data_picker_is_closed),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
-
+    @SuppressLint("NewApi")
+    private fun initTextViewDataStart() {
+        val dateNow = LocalDate.now()
+        val dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        dateStart = dateFormatter.format(dateNow)
+        addNewGameFragmentBinding.datePickerStartTextView.text = dateStart
     }
 
     private fun actionTextViewDataEnd() {
@@ -103,7 +82,7 @@ class AddNewGameFragment : Fragment() {
                 dateEnd = dateFormatter.format(Date(it))
                 Toast.makeText(
                     activity?.applicationContext,
-                    "$dateEnd" + getString(R.string.data_is_selected),
+                    dateEnd + getString(R.string.data_is_selected),
                     Toast.LENGTH_LONG
                 ).show()
                 addNewGameFragmentBinding.datePickerEndTextView.text = dateEnd
@@ -111,7 +90,7 @@ class AddNewGameFragment : Fragment() {
             datePicker.addOnNegativeButtonClickListener {
                 Toast.makeText(
                     activity?.applicationContext,
-                    "${datePicker.headerText}" + getString(R.string.datapicker_is_closed),
+                    datePicker.headerText + getString(R.string.datapicker_is_closed),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -180,7 +159,8 @@ class AddNewGameFragment : Fragment() {
                     name = name,
                     dateStart = dateStart,
                     dateEnd = dateEnd,
-                    listPeopleGame.size
+                    listPeopleGame.size,
+                    statusGameIsActive = 1
                 )
                 viewModel.setIdGame(game.id)
                 activity?.applicationContext?.let { it1 -> viewModel.addNewGame(game, it1) }

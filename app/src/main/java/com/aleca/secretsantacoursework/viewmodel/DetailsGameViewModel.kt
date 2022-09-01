@@ -21,14 +21,6 @@ class DetailsGameViewModel : ViewModel() {
         return game
     }
 
-    fun getPairs(id: Int, context: Context): List<Pair?> {
-        val pair = PairStorage(context)
-        pair.open()
-        val pairs = pair.getFilterList(id)
-        pair.close()
-        return pairs
-    }
-
     fun getPecipientId(idUser: Int, idGame: Int, context: Context): Int {
         val gameUser = PairStorage(context)
         gameUser.open()

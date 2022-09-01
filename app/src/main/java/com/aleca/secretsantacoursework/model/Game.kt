@@ -6,4 +6,5 @@ class Game(
     val dateStart: String,
     var dateEnd: String,
     val countGamers: Int,
+    var statusGameIsActive: Int,
 )

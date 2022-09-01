@@ -58,7 +58,15 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
             ).show()
         }
         if (!isEdit) {
-            userViewModel.addUser(User(0, login, password, name, getString(R.string.write_your_hobbies)), context)
+            userViewModel.addUser(
+                User(
+                    0,
+                    login,
+                    password,
+                    name,
+                    getString(R.string.write_your_hobbies)
+                ), context
+            )
             Toast.makeText(
                 context,
                 getString(R.string.sign_up_registration_sucsess_toast),

@@ -13,6 +13,7 @@ private const val COLUMN_NAME = "name"
 private const val COLUMN_DATE_START = "dateStart"
 private const val COLUMN_DATE_END = "dateEnd"
 private const val COLUMN_COUNT_GAMERS = "countGamers"
+private const val COLUMN_STATUS_GAME_IS_ACTIVE = "statusGameIsActive"
 
 class GameStorage(context: Context) {
     private var sqlHelper: DatabaseHelper = DatabaseHelper(context)
@@ -41,7 +42,9 @@ class GameStorage(context: Context) {
             val dateStart = cursor.getString(cursor.getColumnIndex(COLUMN_DATE_START))
             val dateEnd = cursor.getString(cursor.getColumnIndex(COLUMN_DATE_END))
             val countGamers = cursor.getInt(cursor.getColumnIndex(COLUMN_COUNT_GAMERS))
-            list.add(Game(id, name, dateStart, dateEnd, countGamers))
+            val statusGameIsActive = cursor.getInt(cursor.getColumnIndex(
+                COLUMN_STATUS_GAME_IS_ACTIVE))
+            list.add(Game(id, name, dateStart, dateEnd, countGamers, statusGameIsActive))
             cursor.moveToNext()
         } while (!cursor.isAfterLast)
         cursor.close()
@@ -64,9 +67,11 @@ class GameStorage(context: Context) {
         val dateStart = cursor.getString(cursor.getColumnIndex(COLUMN_DATE_START))
         val dateEnd = cursor.getString(cursor.getColumnIndex(COLUMN_DATE_END))
         val countGamers = cursor.getInt(cursor.getColumnIndex(COLUMN_COUNT_GAMERS))
+        val statusGameIsActive = cursor.getInt(cursor.getColumnIndex(
+            COLUMN_STATUS_GAME_IS_ACTIVE))
         cursor.close()
         database.close()
-        return Game(id, name, dateStart, dateEnd, countGamers)
+        return Game(id, name, dateStart, dateEnd, countGamers, statusGameIsActive)
     }
 
     fun insert(model: Game) {
@@ -75,6 +80,7 @@ class GameStorage(context: Context) {
         content.put(COLUMN_DATE_START, model.dateStart)
         content.put(COLUMN_DATE_END, model.dateEnd)
         content.put(COLUMN_COUNT_GAMERS, model.countGamers)
+        content.put(COLUMN_STATUS_GAME_IS_ACTIVE, model.statusGameIsActive)
         val database = this.sqlHelper.writableDatabase
         database.insert(TABLE, null, content)
     }
@@ -85,6 +91,7 @@ class GameStorage(context: Context) {
         content.put(COLUMN_DATE_START, model.dateStart)
         content.put(COLUMN_DATE_END, model.dateEnd)
         content.put(COLUMN_COUNT_GAMERS, model.countGamers)
+        content.put(COLUMN_STATUS_GAME_IS_ACTIVE, model.statusGameIsActive)
         val where = COLUMN_ID + " = " + model.id
         val database = this.sqlHelper.writableDatabase
         database.update(TABLE, content, where, null)

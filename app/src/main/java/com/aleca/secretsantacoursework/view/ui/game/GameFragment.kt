@@ -1,10 +1,15 @@
 package com.aleca.secretsantacoursework.view.ui.game
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +21,10 @@ import com.aleca.secretsantacoursework.view.MainMenuActivity
 import com.aleca.secretsantacoursework.view.USER_ID
 import com.aleca.secretsantacoursework.viewmodel.GameViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 const val GAME_ID = "GAME_ID"
 const val USER_ID_FOR_PAIR = "USER_ID_FOR_PAIR"
@@ -66,6 +75,20 @@ class GameFragment : Fragment() {
         userId = id
         listGames =
             activity?.applicationContext?.let { gameViewModel.getGames(id, it) } as ArrayList<Game>
+        for (game in listGames) {
+            game.statusGameIsActive = checkGameIsActive(game.dateEnd)
+        }
+    }
+
+
+    @SuppressLint("NewApi")
+    private fun checkGameIsActive(dateEndGame: String): Int {
+        val dateNow = LocalDate.now()
+        val dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val dateEndInDate = LocalDate.parse(dateEndGame, dateFormatter)
+        return if (dateEndInDate.isBefore(dateNow) || dateEndInDate.isEqual(dateNow)) {
+            0
+        } else 1
     }
 
     private fun bindRecyclerList() {
