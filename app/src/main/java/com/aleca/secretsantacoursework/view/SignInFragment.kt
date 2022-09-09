@@ -38,14 +38,15 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
                 getString(R.string.sign_in_toast),
                 Toast.LENGTH_SHORT
             ).show()
-            //userViewModel.setIdUser(user.id)
+            signInFragmentBinding.incorrectData.text = ""
             val intent = Intent(activity?.applicationContext, MainMenuActivity::class.java)
             intent.putExtra(USER_ID, user.id)
             startActivity(intent)
         } else {
+            signInFragmentBinding.incorrectData.text = "Неверный логин или пароль"
             Toast.makeText(
                 activity?.applicationContext,
-                getString(R.string.sign_in_error_toast),
+                getString(R.string.sign_in_errror_incorrect_data_toast),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -88,7 +89,10 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
     }
 
     private fun checkUser(): Boolean {
-        val listUser = userViewModel.getListUser((activity as AuthActivity).applicationContext)
+        val listUser = (activity as AuthActivity).getFirebasePostService().syncFirebaseAndLocalDataUser((activity as AuthActivity).applicationContext)
+        val listGames = (activity as AuthActivity).getFirebasePostService().syncFirebaseAndLocalDataGame((activity as AuthActivity).applicationContext)
+        val listPairs =(activity as AuthActivity).getFirebasePostService().syncFirebaseAndLocalDataPair((activity as AuthActivity).applicationContext)
+        val listUserGame = (activity as AuthActivity).getFirebasePostService().syncFirebaseAndLocalDataUserGame((activity as AuthActivity).applicationContext)
         val check = (activity as AuthActivity).getFirebasePostService().checkUser(login, password)
         val userOur = listUser.find { it?.email == login && it.password == password }
         if (userOur != null) {

@@ -9,7 +9,10 @@ import com.aleca.secretsantacoursework.R
 import com.aleca.secretsantacoursework.database.firebase.GameFirebase
 import com.aleca.secretsantacoursework.database.firebase.UserFirebase
 import com.aleca.secretsantacoursework.database.firebase.UserGameFirebase
+import com.aleca.secretsantacoursework.model.Game
+import com.aleca.secretsantacoursework.model.Pair
 import com.aleca.secretsantacoursework.model.User
+import com.aleca.secretsantacoursework.model.UserGame
 import com.aleca.secretsantacoursework.utils.FirebasePostService
 import kotlinx.coroutines.*
 
@@ -21,15 +24,23 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
         CoroutineScope(Dispatchers.IO).launch {
-            listUsers = mService.downloadUserFromFirebase(this@AuthActivity) as ArrayList<User>
+            listUsers = mService.syncFirebaseAndLocalDataUser(this@AuthActivity) as ArrayList<User>
+            val listGames = mService.syncFirebaseAndLocalDataGame(this@AuthActivity) as ArrayList<Game>
+            val listPairs = mService.syncFirebaseAndLocalDataPair(this@AuthActivity) as ArrayList<Pair>
+            val listUserGame = mService.syncFirebaseAndLocalDataUserGame(this@AuthActivity) as ArrayList<UserGame>
             withContext(Dispatchers.Main) {
+                if (savedInstanceState == null) {
+                    val signInFragment = SignInFragment()
+                    supportFragmentManager.beginTransaction().addToBackStack(null)
+                        .replace(R.id.auth_activity, signInFragment).commit()
+                }
             }
         }
-        if (savedInstanceState == null) {
-            val signInFragment = SignInFragment()
-            supportFragmentManager.beginTransaction().addToBackStack(null)
-                .replace(R.id.auth_activity, signInFragment).commit()
-        }
+//        if (savedInstanceState == null) {
+//            val signInFragment = SignInFragment()
+//            supportFragmentManager.beginTransaction().addToBackStack(null)
+//                .replace(R.id.auth_activity, signInFragment).commit()
+//        }
     }
 
     override fun onStart() {
@@ -39,11 +50,6 @@ class AuthActivity : AppCompatActivity() {
             bindService(intent, mService.getConnection(), Context.BIND_AUTO_CREATE)
         }
         startService(Intent(this, FirebasePostService::class.java))
-        CoroutineScope(Dispatchers.IO).launch {
-            listUsers = mService.downloadUserFromFirebase(this@AuthActivity) as ArrayList<User>
-            withContext(Dispatchers.Main) {
-            }
-        }
     }
 
     override fun onStop() {
@@ -54,20 +60,5 @@ class AuthActivity : AppCompatActivity() {
 
     fun getFirebasePostService(): FirebasePostService {
         return mService
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        val userFirebaseLogic = UserFirebase()
-        userFirebaseLogic.syncUsers(this)
-
-        val gameFirebaseLogic = GameFirebase()
-        gameFirebaseLogic.syncUsers(this)
-
-        val userGameFirebase = UserGameFirebase()
-        userGameFirebase.syncUsers(this)
-
-        val pairLogic = PairFirebase()
-        pairLogic.syncUsers(this)
     }
 }

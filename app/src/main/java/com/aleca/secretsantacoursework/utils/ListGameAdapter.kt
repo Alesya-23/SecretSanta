@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -24,11 +25,16 @@ class ListGameAdapter(private val listGames: ArrayList<Game>) :
         var nameGame: MaterialTextView? = null
         var countPeople: TextView = itemView.findViewById(R.id.count_people)
         val statusGame: TextView = itemView.findViewById(R.id.status_game_is_active)
+        var buttonDelete: Button = itemView.findViewById(R.id.delete_game)
 
         init {
             nameGame = itemView.findViewById(R.id.name_game)
             itemView.setOnClickListener {
                 onItemClick?.invoke(listGames[position])
+            }
+            buttonDelete = itemView.findViewById(R.id.delete_game)
+            buttonDelete.setOnClickListener {
+                onItemClickDel?.invoke(listGames[adapterPosition])
             }
         }
     }

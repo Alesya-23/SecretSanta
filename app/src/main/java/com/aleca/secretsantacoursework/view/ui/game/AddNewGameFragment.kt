@@ -20,6 +20,7 @@ import com.aleca.secretsantacoursework.model.Game
 import com.aleca.secretsantacoursework.model.Pair
 import com.aleca.secretsantacoursework.model.User
 import com.aleca.secretsantacoursework.view.MainMenuActivity
+import com.aleca.secretsantacoursework.view.USER_ID
 import com.aleca.secretsantacoursework.viewmodel.AddNewGameViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.time.LocalDate
@@ -177,6 +178,7 @@ class AddNewGameFragment : Fragment() {
                     )
                 }
                 val intent = Intent(activity?.baseContext, MainMenuActivity::class.java)
+                intent.putExtra(USER_ID, userId)
                 startActivity(intent)
             } else {
                 Toast.makeText(

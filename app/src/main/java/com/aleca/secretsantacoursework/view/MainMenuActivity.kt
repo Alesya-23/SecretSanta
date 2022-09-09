@@ -9,10 +9,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.aleca.secretsantacoursework.R
+import com.aleca.secretsantacoursework.database.firebase.GameFirebase
+import com.aleca.secretsantacoursework.database.firebase.PairFirebase
+import com.aleca.secretsantacoursework.database.firebase.UserFirebase
+import com.aleca.secretsantacoursework.database.firebase.UserGameFirebase
 import com.aleca.secretsantacoursework.view.ui.home.HomeViewModel
 
 class MainMenuActivity : AppCompatActivity() {
-    val homeViewModel: HomeViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu_profile)
@@ -30,5 +33,20 @@ class MainMenuActivity : AppCompatActivity() {
 
     fun getUser(): Int {
         return intent.getIntExtra(USER_ID, -1)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val userFirebaseLogic = UserFirebase()
+        userFirebaseLogic.syncUsers(this)
+
+        val gameFirebaseLogic = GameFirebase()
+        gameFirebaseLogic.syncUsers(this)
+
+        val userGameFirebase = UserGameFirebase()
+        userGameFirebase.syncUsers(this)
+
+        val pairLogic = PairFirebase()
+        pairLogic.syncUsers(this)
     }
 }

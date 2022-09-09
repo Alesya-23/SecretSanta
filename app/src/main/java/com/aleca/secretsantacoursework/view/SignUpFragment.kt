@@ -10,6 +10,8 @@ import com.aleca.secretsantacoursework.R
 import com.aleca.secretsantacoursework.databinding.SignUpFragmentBinding
 import com.aleca.secretsantacoursework.model.User
 import com.aleca.secretsantacoursework.viewmodel.UserViewModel
+import java.util.*
+import kotlin.concurrent.schedule
 
 class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
     private lateinit var signUpFragmentBinding: SignUpFragmentBinding
@@ -33,7 +35,7 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
             password = passwordSignUpEditText.text.toString()
             repeatPassword = passwordSignUpRepeatEditText.text.toString()
             if (checkFillFields()) {
-                registerUser()
+                    registerUser()
                 val signInFragment = SignInFragment()
                 parentFragmentManager
                     .beginTransaction()
@@ -46,7 +48,7 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
     private fun registerUser() {
         val context = (activity as AuthActivity).applicationContext
-        val listUser = userViewModel.getListUser(context)
+        val listUser = (activity as AuthActivity).getFirebasePostService().syncFirebaseAndLocalDataUser((activity as AuthActivity).applicationContext)
         val userOur =
             listUser.find { it?.email == login && it.password == password || it?.email == login }
         if (userOur != null) {

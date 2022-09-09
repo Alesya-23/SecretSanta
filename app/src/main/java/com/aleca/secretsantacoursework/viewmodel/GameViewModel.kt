@@ -34,4 +34,19 @@ class GameViewModel : ViewModel() {
         gameStorage.close()
         return list
     }
+
+    fun getGame(idGame: Int, context: Context): Game? {
+        val gameStorage = GameStorage(context)
+        gameStorage.open()
+        val game = gameStorage.getElement(idGame)
+        gameStorage.close()
+        return game
+    }
+
+    fun deleteGame(idGame: Int,context: Context){
+        val gameStorage = GameStorage(context)
+        gameStorage.open()
+        gameStorage.delete(idGame)
+        gameStorage.close()
+    }
 }

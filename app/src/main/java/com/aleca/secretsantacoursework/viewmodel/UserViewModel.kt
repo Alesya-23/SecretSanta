@@ -21,11 +21,7 @@ class UserViewModel : ViewModel() {
         userStorage.close()
     }
 
-    fun getUsersFromFirebase() {
+  fun getUserSync(){
 
-    }
-
-    fun getUsersFromDB() {
-
-    }
+  }
 }

@@ -2,19 +2,17 @@ package com.aleca.secretsantacoursework.view.ui.game
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.icu.text.SimpleDateFormat
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.annotation.RequiresApi
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aleca.secretsantacoursework.R
+import com.aleca.secretsantacoursework.database.storage.GameStorage
 import com.aleca.secretsantacoursework.model.Game
 import com.aleca.secretsantacoursework.utils.ListGameAdapter
 import com.aleca.secretsantacoursework.view.MainMenuActivity
@@ -100,6 +98,21 @@ class GameFragment : Fragment() {
             intent.putExtra(GAME_ID, it.id)
             intent.putExtra(USER_ID_FOR_PAIR, userId)
             startActivity(intent)
+        }
+        adapter.onItemClickDel = { game ->
+            deleteGame(game.id)
+        }
+    }
+
+    private fun deleteGame(idGame: Int) {
+        val game = activity?.applicationContext?.let { gameViewModel.getGame(idGame, it) }
+        if (game != null) {
+            if(game.statusGameIsActive == 0) {
+                activity?.applicationContext?.let { gameViewModel.deleteGame(idGame, it) }
+                downloadList()
+                bindRecyclerList()
+            }
+            else Toast.makeText(activity?.applicationContext, "Активную игру удалить нельзя", Toast.LENGTH_SHORT).show()
         }
     }
 }
